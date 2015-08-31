@@ -25,20 +25,26 @@
  * http://www.scm-manager.com
  */
 
-angular.module('adf.widget.update', ['adf.provider'])
-  .config(function(dashboardProvider){
+angular.module('universeadm.widget.update', ['adf.provider','universeadm.updateWidget.controllers',
+ 'universeadm.updateWidget.services'])
+  .config(['dashboardProvider',function(dashboardProvider){
     dashboardProvider
-      .widget('test', {
+      .widget('test', /*@ngInject*/{
         title: 'Update',
         description: 'Update',
         templateUrl: '{widgetsPath}/views/updateWidget/view.html',
+        controller: 'widgetCtrl',
+        adminOnly: true,
         edit: {
           templateUrl: '{widgetsPath}/views/updateWidget/edit.html'
+        },
+        resolve: {
+          update: function(updateService){
+            return updateService.versionCheck();
+          }
         }
+        
       });
-  }).controller('widgetCtrl',function($scope){
-    $scope.version= "14.11.4 - Stern";
-    $scope.updateAvailable= true;
-    $scope.availableVersion= "14.11.5 - Stern2";
-  });
+    
+  }]);
 

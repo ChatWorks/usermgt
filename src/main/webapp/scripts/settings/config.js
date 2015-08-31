@@ -46,9 +46,6 @@ angular.module('universeadm.settings.config', ['ui.router',
         resolve: {
           settings: function(settingsService){
             return settingsService.get();
-          },
-          update: function(updateService){
-            return updateService.versionCheck();
           }
         }
       });

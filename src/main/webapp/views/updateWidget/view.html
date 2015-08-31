@@ -1,5 +1,5 @@
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
-<div ng-controller="widgetCtrl">   
+  
     <div  style="text-align: center;">
       <button  class="btn btn-warning" id="updateButton" style="width:100%;height:100%" ng-show="updateAvailable && !updateScheduled && !updateInProgress && !updatePrecheck"
                ng-click="openUpdateStartConfirmation()" ng-disabled="buttonDisabled || !validCreds">
@@ -18,4 +18,3 @@
       <div ng-if="wrongCreds" id="update-failed-unexpected" class="h4"><br>Username or password is wrong</div>
     </div>
 
-</div>

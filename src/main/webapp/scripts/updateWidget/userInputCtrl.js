@@ -25,9 +25,9 @@
  * http://www.scm-manager.com
  */
 
-angular.module('universeadm.settings.controllers')
-        .controller('userInputCtrl', function ($scope, $modalInstance, $log, updateService) {
-
+angular.module('universeadm.updateWidget.controllers')
+        .controller('userInputCtrl', ['$scope', '$modalInstance', '$log', 'updateService',
+        function ($scope, $modalInstance, $log, updateService) {
           updateService.userInput().then(function (data) {
             $scope.inputName = $scope.objectKeys(data)[0];
             $scope.fieldsName = $scope.objectKeys(data[$scope.inputName])[0];
@@ -68,4 +68,4 @@ angular.module('universeadm.settings.controllers')
             });
           };
 
-        });
+        }]);

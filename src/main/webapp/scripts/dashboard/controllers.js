@@ -25,16 +25,18 @@
  * http://www.scm-manager.com
  */
 
-angular.module('universeadm.dashboard.controllers', ['universeadm.dashboard.services', 'adf', 'LocalStorageModule', 'adf.structures.base',
+angular.module('universeadm.dashboard.controllers', ['universeadm.dashboard.services', 'adf', 'adf.structures.base',
   'adf.widget.clock', 'adf.widget.linklist', 'adf.widget.github', 'adf.widget.markdown', 'adf.widget.news', 'adf.widget.randommsg', 'adf.widget.version',
-  'adf.widget.weather','adf.widget.update'])
-        .controller('dashboardController', function ($scope, $log, dashboardService, config) {
-          $scope.model = config
-
+  'adf.widget.weather','universeadm.widget.update'])
+        .controller('dashboardController', function ($scope, $log, dashboardService, config,$rootScope) {
+          $scope.model = config;
+          $scope.widgetFilter = function(widget){
+              return (widget.adminOnly || $rootScope.subject.admin);
+          };
           $scope.$on('adfDashboardChanged', function (event, name, model) {
             dashboardService.set(model).then(function () {
             }, function () {
               $log.error("Cant set dashboard data.");
-            })
+            });
           });
         });

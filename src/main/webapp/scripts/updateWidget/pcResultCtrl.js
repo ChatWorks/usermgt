@@ -24,10 +24,10 @@
  * 
  * http://www.scm-manager.com
  */
-angular.module('universeadm.settings.controllers')
-        .controller('pcResultCtrl', function ($scope, $log, $timeout, $modalInstance, updateService, items) {
+angular.module('universeadm.updateWidget.controllers')
+        .controller('pcResultCtrl',
+        function ($scope, $log, $timeout, $modalInstance, updateService, items) {
           $scope.items = items;
-
 
           $scope.preCheckGlobalState = function (data) {
             $scope.globalState = 'ok';

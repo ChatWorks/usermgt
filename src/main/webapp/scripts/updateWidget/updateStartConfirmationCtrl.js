@@ -27,12 +27,13 @@
 
 
 
-angular.module('universeadm.settings.controllers')
-        .controller('updateStartConfirmationCtrl', function ($scope, $modalInstance) {
+angular.module('universeadm.updateWidget.controllers')
+        .controller('updateStartConfirmationCtrl', ['$scope', '$modalInstance',
+        function ($scope, $modalInstance) {
           $scope.yes = function () {
             $modalInstance.close();
           };
           $scope.no = function () {
             $modalInstance.dismiss();
           };
-        });
+        }]);
