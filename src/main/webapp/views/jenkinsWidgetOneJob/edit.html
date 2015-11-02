@@ -1,0 +1,11 @@
+<form role="form">
+  <div class="form-group" ng-controller="jenkinsWidgetOneJobCtrl">
+    <label for="number">Number of Builds</label>
+    <input type="number" class="form-control" id="number" ng-model="config.numberOfBuilds">
+    
+    <label for="select">Select a job</label>
+    <select name="jobSelect" class="form-control" id="jobSelect" ng-model="config.selectedJob">
+      <option ng-repeat="job in allJobs" value="{{job.title}}">{{job.title}}</option>
+    </select>
+  </div>
+</form>
