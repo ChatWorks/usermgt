@@ -1,0 +1,12 @@
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+<div ng-controller="jenkinsWidgetCtrl">   
+  <div ng-repeat="build in lastBuilds">
+    <img ng-if="build.BuildResult=='SUCCESS'" src="style/img/jenkins_success.png">
+    <img ng-if="build.BuildResult=='FAILURE'" src="style/img/jenkins_failed.png">
+    <img ng-if="build.BuildResult=='DISABLED'" src="style/img/jenkins_disabled.png">
+    {{build.BuildName}}
+    <a style="font-size: 80%;color:grey;">{{build.BuildTime}} ago</a>
+
+  </div>
+
+</div>
