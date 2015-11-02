@@ -27,7 +27,7 @@
 
 angular.module('universeadm.dashboard.controllers', ['universeadm.dashboard.services', 'adf', 'LocalStorageModule', 'adf.structures.base',
   'adf.widget.clock', 'adf.widget.linklist', 'adf.widget.github', 'adf.widget.markdown', 'adf.widget.news', 'adf.widget.randommsg', 'adf.widget.version',
-  'adf.widget.weather','adf.widget.update'])
+  'adf.widget.weather','adf.widget.update','adf.widget.jenkins','adf.widget.jenkinsOneJob'])
         .controller('dashboardController', function ($scope, $log, dashboardService, config) {
           $scope.model = config
 
