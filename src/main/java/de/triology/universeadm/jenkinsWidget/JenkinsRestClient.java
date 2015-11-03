@@ -26,30 +26,18 @@
  */
 package de.triology.universeadm.jenkinsWidget;
 
-import com.offbytwo.jenkins.JenkinsServer;
-import com.offbytwo.jenkins.model.Build;
-import com.offbytwo.jenkins.model.BuildWithDetails;
-import com.offbytwo.jenkins.model.Job;
-import com.offbytwo.jenkins.model.JobWithDetails;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URLEncoder;
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.net.URL;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.commons.beanutils.BeanComparator;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -57,23 +45,100 @@ import org.json.simple.JSONObject;
  */
 public class JenkinsRestClient {
 
-  JenkinsServer jenkins;
+  private String TIMESTAMP = "timestamp";
+  private String LAST_BUILD = "lastBuild";
+  private String LAST_BUILD_NAME = "fullDisplayName";
+  private String RESULT = "result";
+  private String NAME = "name";
+  private String urlString = "http://qa.coreboot.org/";
+  //private String urlString = "https://ci.exoplatform.org/";
 
-  public JenkinsRestClient() throws URISyntaxException, UnsupportedEncodingException {
-    //String url = "https://ci.exoplatform.org/";
-    String url = "http://192.168.115.130:49154";
-    //String url = "http://qa.coreboot.org/";
-    this.jenkins = new JenkinsServer(new URI(URLEncoder.encode(url, "UTF-8")));
+  public JenkinsRestClient() {
   }
 
-  private JSONArray convertLastBuildsToJSON(ArrayList<BuildWithDetails> lastBuilds) {
+  public JSONArray getLastBuilds(int quantity) {
+    URL url;
+    try {
+      url = new URL(urlString + "api/json?tree=jobs[lastBuild[fullDisplayName,id,timestamp,result]]");
+      String response = new Scanner(url.openStream()).useDelimiter("\\Z").next();
+      JSONObject jsonObj;
+      JSONArray jsonArrJobs;
+      JSONParser jsonPar = new JSONParser();
+      jsonObj = new JSONObject((JSONObject) jsonPar.parse(response));
+      jsonArrJobs = (JSONArray) jsonObj.get("jobs");
+      JSONArray jsonArrBuilds = new JSONArray();
+      for (Object job : jsonArrJobs) {
+        jsonObj = (JSONObject) job;
+        jsonArrBuilds.add((JSONObject) jsonObj.get(LAST_BUILD));
+      }
+      jsonArrBuilds.sort(new Comparator<JSONObject>() {
+        @Override
+        public int compare(JSONObject job1, JSONObject job2) {
+          long time1 = (long) job1.get(TIMESTAMP);
+          long time2 = (long) job2.get(TIMESTAMP);
+          int diff = (int) ((time1 - time2) / 1000);
+          return -diff;
+        }
+      });
+      List<JSONObject> jobList;
+      if (quantity > jsonArrBuilds.size()) {
+        quantity = jsonArrBuilds.size();
+      }
+      jobList = jsonArrBuilds.subList(0, quantity);
+      jsonArrBuilds = convertLastBuildsToJSON(jobList);
+      return jsonArrBuilds;
+    }
+    catch (IOException | ParseException ex) {
+      Logger.getLogger(JenkinsRestClient.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return null;
+  }
+
+  public JSONArray getBuilds(String jobName, int quantityInt) {
+    URL url;
+    try {
+      url = new URL(urlString + "job/" + jobName + "/api/json?tree=builds[fullDisplayName,result,timestamp]{," + quantityInt + "}");
+      String response = new Scanner(url.openStream()).useDelimiter("\\Z").next();
+      JSONObject jsonObj;
+      JSONParser jsonPar = new JSONParser();
+      jsonObj = new JSONObject((JSONObject) jsonPar.parse(response));
+      JSONArray jsonArrBuilds;
+      jsonArrBuilds = (JSONArray) jsonObj.get("builds");
+      jsonArrBuilds = convertLastBuildsToJSON(jsonArrBuilds);
+      return jsonArrBuilds;
+    }
+    catch (IOException | ParseException ex) {
+      Logger.getLogger(JenkinsRestClient.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return null;
+  }
+
+  public JSONArray getAllJobs() {
+    URL url;
+    try {
+      url = new URL(urlString + "api/json?tree=jobs[name]");
+      String response = new Scanner(url.openStream()).useDelimiter("\\Z").next();
+      JSONObject jsonObj;
+      JSONArray jsonArrJobs;
+      JSONParser jsonPar = new JSONParser();
+      jsonObj = new JSONObject((JSONObject) jsonPar.parse(response));
+      jsonArrJobs = (JSONArray) jsonObj.get("jobs");
+      return jsonArrJobs;
+    }
+    catch (IOException | ParseException ex) {
+      Logger.getLogger(JenkinsRestClient.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return null;
+  }
+
+  private JSONArray convertLastBuildsToJSON(List<JSONObject> lastBuilds) {
     JSONObject jsonObj = new JSONObject();
     JSONArray jsonArr = new JSONArray();
-    for (BuildWithDetails build : lastBuilds) {
-      jsonObj.put("BuildName", build.getFullDisplayName());
-      jsonObj.put("BuildResult", build.getResult().name());
+    for (JSONObject build : lastBuilds) {
+      jsonObj.put("BuildName", build.get(LAST_BUILD_NAME));
+      jsonObj.put("BuildResult", build.get(RESULT));
 
-      long buildTime = System.currentTimeMillis() - build.getTimestamp();
+      long buildTime = System.currentTimeMillis() - (long) build.get(TIMESTAMP);
       jsonObj.put("BuildTime", formatDuration(buildTime));
       jsonArr.add(jsonObj.clone());
     }
@@ -132,101 +197,4 @@ public class JenkinsRestClient {
     return result;
   }
 
-  public JSONArray getLastBuilds(int quantity) {
-    if (quantity < 0) {
-      throw new IllegalArgumentException("Must be > 0!");
-    }
-    ArrayList<BuildWithDetails> buildList = new ArrayList<>();
-    JobWithDetails job;
-    Map<String, Job> jobs;
-    try {
-      jobs = jenkins.getJobs();
-      for (Entry<String, Job> entry : jobs.entrySet()) {
-
-        try {
-          job = jobs.get(entry.getKey()).details();
-          buildList.add(job.getLastCompletedBuild().details());
-        }
-        catch (IOException ex) {
-          Logger.getLogger(JenkinsRestClient.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (NullPointerException ex) {
-          Logger.getLogger(JenkinsRestClient.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-      }
-    }
-    catch (IOException ex) {
-      Logger.getLogger(JenkinsRestClient.class.getName()).log(Level.SEVERE, null, ex);
-    }
-
-    sortBuildList(buildList);
-    if (quantity > buildList.size()) {
-      quantity = buildList.size();
-    }
-    ArrayList<BuildWithDetails> lastBuilds = new ArrayList<>(buildList.subList(0, quantity));
-    JSONArray json = convertLastBuildsToJSON(lastBuilds);
-    return json;
-  }
-
-  private ArrayList<BuildWithDetails> sortBuildList(ArrayList<BuildWithDetails> buildList) {
-    ArrayList<BuildWithDetails> sortedBuildList = buildList;
-    Collections.sort(sortedBuildList, new Comparator<BuildWithDetails>() {
-      @Override
-      public int compare(BuildWithDetails job1, BuildWithDetails job2) {
-        long diff;
-        int result = 0;
-        diff = job2.getTimestamp() - job1.getTimestamp();
-        if (diff < 0) {
-          result = -1;
-        }
-        else if (diff > 0) {
-          result = 1;
-        }
-        return result;
-      }
-    });
-    return sortedBuildList;
-  }
-
-  private void printError(String message, String variable) {
-    System.out.println(message + variable);
-  }
-
-  public JSONArray getAllJobs() throws IOException {
-    Map<String, Job> jobs = jenkins.getJobs();
-    JSONObject jsonObj = new JSONObject();
-    JSONArray jsonArr = new JSONArray();
-    for (Entry<String, Job> entry : jobs.entrySet()) {
-      jsonObj.put("title", jobs.get(entry.getKey()).getName());
-      jsonArr.add(jsonObj.clone());
-    }
-    return jsonArr;
-  }
-
-  public JSONArray getBuilds(String job,int quantity) {
-    Map<String, Job> jobs;
-    printError("Job: ", job);
-    JobWithDetails jobWithDetails = null;
-    ArrayList<BuildWithDetails> buildWithDetailsList = new ArrayList<>();
-    try {
-      jobWithDetails = jenkins.getJob(job);
-      List<Build> buildList = jobWithDetails.getBuilds();
-
-      for (Build build : buildList) {
-        buildWithDetailsList.add(build.details());
-      }
-      buildWithDetailsList = sortBuildList(buildWithDetailsList);
-      if (quantity > buildList.size()) {
-        quantity = buildList.size();
-      }
-    }
-    catch (IOException | NullPointerException ex) {
-      Logger.getLogger(JenkinsRestClient.class.getName()).log(Level.SEVERE, null, ex);
-    }
-    ArrayList<BuildWithDetails> lastBuilds = new ArrayList<>(buildWithDetailsList.subList(0, quantity));
-    JSONArray json = convertLastBuildsToJSON(lastBuilds);
-    return json;
-
-  }
 }

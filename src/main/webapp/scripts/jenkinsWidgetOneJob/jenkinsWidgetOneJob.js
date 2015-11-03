@@ -40,12 +40,14 @@ angular.module('adf.widget.jenkinsOneJob', ['adf.provider', 'universeadm.jenkins
   if ($scope.config.numberOfBuilds == null) {
     $scope.config.numberOfBuilds = 5;
   }
-  $scope.model.title = $scope.config.selectedJob;
+  $scope.updateTitle = function () {
+    $scope.model.title = $scope.config.selectedJob;
+  };
   jenkinsOneJobService.getAllJobs().then(function (jobs) {
     $scope.allJobs = jobs;
   }, function () {
   });
-  jenkinsOneJobService.getBuilds($scope.config.selectedJob,$scope.config.numberOfBuilds).then(function (builds) {
+  jenkinsOneJobService.getBuilds($scope.config.selectedJob, $scope.config.numberOfBuilds).then(function (builds) {
     $scope.lastBuilds = builds;
   }, function () {
   });

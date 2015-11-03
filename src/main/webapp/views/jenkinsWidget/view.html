@@ -4,9 +4,9 @@
     <img ng-if="build.BuildResult=='SUCCESS'" src="style/img/jenkins_success.png">
     <img ng-if="build.BuildResult=='FAILURE'" src="style/img/jenkins_failed.png">
     <img ng-if="build.BuildResult=='DISABLED'" src="style/img/jenkins_disabled.png">
+    <img ng-if="!build.BuildResult" src="style/img/jenkins_running.gif">
     {{build.BuildName}}
     <a style="font-size: 80%;color:grey;">{{build.BuildTime}} ago</a>
-
   </div>
 
 </div>

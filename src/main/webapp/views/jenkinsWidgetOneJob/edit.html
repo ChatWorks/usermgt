@@ -4,8 +4,9 @@
     <input type="number" class="form-control" id="number" ng-model="config.numberOfBuilds">
     
     <label for="select">Select a job</label>
-    <select name="jobSelect" class="form-control" id="jobSelect" ng-model="config.selectedJob">
-      <option ng-repeat="job in allJobs" value="{{job.title}}">{{job.title}}</option>
+    <select name="jobSelect" class="form-control" id="jobSelect" ng-model="config.selectedJob"
+            ng-change="updateTitle()">
+      <option ng-repeat="job in allJobs" value="{{job.name}}">{{job.name}}</option>
     </select>
   </div>
 </form>

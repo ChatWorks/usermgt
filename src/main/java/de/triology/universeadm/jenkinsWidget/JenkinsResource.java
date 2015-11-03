@@ -27,65 +27,60 @@
 package de.triology.universeadm.jenkinsWidget;
 
 import com.google.inject.Inject;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
 /**
  *
  * @author mbehlendorf
  */
 @Path("jenkins")
 public class JenkinsResource {
-JenkinsRestClient jenkinsClient;
-@Inject
+
+  JenkinsRestClient jenkinsClient;
+
+  @Inject
   public JenkinsResource() throws URISyntaxException, UnsupportedEncodingException {
-    jenkinsClient =new JenkinsRestClient();
+    jenkinsClient = new JenkinsRestClient();
   }
-  
-@POST
-@Path("getLastBuilds")
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.TEXT_PLAIN)
-public String getLastBuilds(String quantity){
-  int quantityInt=Integer.parseInt(quantity);
-  String result;
-  result= jenkinsClient.getLastBuilds(quantityInt).toJSONString();
-  return result;
-}
 
-@POST
-@Path("getBuilds")
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.TEXT_PLAIN)
-public String getBuilds(JSONObject jobAndQuantity){
-  int quantityInt=Integer.parseInt((String)jobAndQuantity.get("quantity"));
-  String result;
-  result= jenkinsClient.getBuilds((String)jobAndQuantity.get("job"),quantityInt).toJSONString();
-  return result;
-}
+  @POST
+  @Path("getLastBuilds")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.TEXT_PLAIN)
+  public String getLastBuilds(String quantity) {
+    int quantityInt = Integer.parseInt(quantity);
+    String result;
+    result = jenkinsClient.getLastBuilds(quantityInt).toJSONString();
+    return result;
+  }
 
-@GET
-@Path("getAllJobs")
-@Produces(MediaType.TEXT_PLAIN)
-public String getAllJobs(){
-  String result;
-  try {
-    result= jenkinsClient.getAllJobs().toJSONString();
+  @POST
+  @Path("getBuilds")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.TEXT_PLAIN)
+  public String getBuilds(JSONObject jobAndQuantity) {
+    int quantityInt = Integer.parseInt((String) jobAndQuantity.get("quantity"));
+    String job = (String) jobAndQuantity.get("job");
+    String result;
+    result = jenkinsClient.getBuilds(job, quantityInt).toJSONString();
+    return result;
   }
-  catch (IOException ex) {
-    result="Cant get all Jobs";
+
+  @GET
+  @Path("getAllJobs")
+  @Produces(MediaType.TEXT_PLAIN)
+  public String getAllJobs() {
+    String result;
+    result = jenkinsClient.getAllJobs().toJSONString();
+    return result;
   }
-  return result;
-}
-  
+
 }
