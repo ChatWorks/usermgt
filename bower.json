@@ -17,6 +17,7 @@
     "angular-dashboard-framework": "~0.9.0",
     "adf-widget-clock": "~0.1.2",
     "angular-local-storage": "~0.2.2",
+    "adf-structures-base": "~0.1.0",
     "adf-widget-linklist": "~0.1.2",
     "adf-widget-github": "~0.1.3",
     "adf-widget-markdown": "~0.1.1",
@@ -32,6 +33,7 @@
     "angular": "1.2.26",
     "angular-dashboard-framework": "~0.9.0",
     "bootstrap": "~3.2.0",
-    "jquery": "1.11.1"
+    "jquery": "1.11.1",
+    "angular-bootstrap": "0.12.0"
   }
 }

@@ -40,5 +40,6 @@ public class DashboardModule extends AbstractModule {
   @Override
   protected void configure() {
     bind(DashboardResource.class);
+      bind(RSSResource.class);
   }
 }

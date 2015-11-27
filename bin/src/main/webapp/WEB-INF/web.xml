@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0" metadata-complete="true">
+  
+  <display-name>User Management ${project.version}</display-name>
+  
+  <listener>
+    <listener-class>
+      de.triology.universeadm.BootstrapContextListener
+    </listener-class>
+  </listener>
+  
+  <!-- cas sso -->
+  
+  <listener>
+    <listener-class>
+      org.jasig.cas.client.session.SingleSignOutHttpSessionListener
+    </listener-class>
+  </listener>
+  
+  <filter>
+    <filter-name>CAS Single Sign Out Filter</filter-name>
+    <filter-class>org.jasig.cas.client.session.SingleSignOutFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>CAS Single Sign Out Filter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  <!-- guice -->
+  
+  <filter>
+    <filter-name>guiceFilter</filter-name>
+    <filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>guiceFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  <!-- rest -->
+  
+  <context-param>
+    <param-name>resteasy.servlet.mapping.prefix</param-name>
+    <param-value>/api</param-value>
+  </context-param>
+
+  <servlet>
+    <servlet-name>Resteasy</servlet-name>
+    <servlet-class>
+      org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher
+    </servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>Resteasy</servlet-name>
+    <url-pattern>/api/*</url-pattern>
+  </servlet-mapping>
+  
+  <!-- session -->
+  
+  <session-config>
+    <session-timeout>
+      30
+    </session-timeout>
+  </session-config>
+</web-app>

@@ -27,12 +27,17 @@
 package de.triology.universeadm.dashboard;
 
 import com.google.inject.Inject;
+
 import de.triology.universeadm.account.DefaultAccountManager;
 import de.triology.universeadm.settings.SettingsException;
 import de.triology.universeadm.user.User;
+
 import java.io.File;
 import java.io.IOException;
+
 import org.apache.commons.io.FileUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -58,14 +63,14 @@ class DashboardStore {
     }
   }
 
-  @Inject
+  /*@Inject
   public DashboardStore(DefaultAccountManager accountManager) {
     this.accountManager = accountManager;
-  }
+  }*/
 
   private File getUserFile() {
-    User user = accountManager.getCurrentUser();
-    return new File(dashboardPath + user.getUsername() + ".json");
+    Subject subject = SecurityUtils.getSubject();
+    return new File(dashboardPath + subject.getPrincipal() + ".json");
   }
 
   public String get() {

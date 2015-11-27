@@ -1,0 +1,77 @@
+<div class="row">
+  <div class="col-sm-6">
+    <h1>Groups</h1>
+  </div>
+  <div class="col-sm-2">
+    <a class="btn btn-primary pull-right" style="margin-top: 20px;" ng-href="#/group/">Create</a>
+  </div>
+  <div class="col-sm-4">
+    
+    <form class="form pull-right" style="margin-top: 20px;" role="form" name="searchForm" ng-submit="search(nonSubmittedQuery)" novalidate>
+      <div class="form-group">
+        <div class="input-group">
+          <a class="input-group-addon pointer" ng-click="search(nonSubmittedQuery)" ng-disabled="searchForm.$invalid">
+            <i class="fa">&#xf002;</i>
+          </a>
+          <input name="query" 
+                 type="text" 
+                 class="form-control" 
+                 placeholder="Search" 
+                 ng-model="nonSubmittedQuery" 
+                 ng-pattern="/^[^\(\)]+$/">
+        </div>
+        <strong ng-show="searchForm.query.$error.pattern" class="text-danger">
+          Query contains illegal characters
+        </strong>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Users</th>
+      <th class="hidden-xs">Functions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="group in groups">
+      <td>
+        <a ng-href="#/group/{{group.name}}">
+          {{group.name}}
+        </a>
+      </td>
+      <td>{{group.description}}</td>
+      <td>{{group.members.length}}</td>
+      <td class="hidden-xs">
+        <button class="btn btn-warning" href="" ng-click="remove(group)">
+          Remove
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="center" ng-hide="pages <= 1">
+  <ul class="pagination">
+    <li ng-class="{disabled: page <= 1}">
+      <a href="#/groups/1?q={{query}}">&laquo;</a>
+    </li>
+    <li ng-if="pageRange.length > 0 && pageRange[0] !== 1" class="disabled">
+      <a href="">...</a>
+    </li>
+    <li ng-repeat="p in pageRange" ng-class="{active: p === page}">
+      <a ng-href="#/groups/{{p}}?q={{query}}">{{p}}</a>
+    </li>
+    <li ng-if="pageRange.length > 0 && pageRange[pageRange.length - 1] !== pages" class="disabled">
+      <a href="">...</a>
+    </li>
+    <li ng-class="{disabled: page >= pages}">
+      <a ng-href="#/groups/{{pages}}?q={{query}}">&raquo;</a>
+    </li>
+  </ul>
+</div>
