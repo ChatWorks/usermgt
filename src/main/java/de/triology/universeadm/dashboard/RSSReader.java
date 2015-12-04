@@ -26,97 +26,13 @@
  */
 package de.triology.universeadm.dashboard;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.xml.bind.JAXBException;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.json.simple.JSONObject;
-import org.slf4j.LoggerFactory;
-
 /**
  *
  * @author yassine
  */
-public class RSSReader {
-
-    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(RSSReader.class.getName());
-
-    public static void main(String[] args) {
-    //System.out.println(readRSS("http://www.scm-manager.com/feed/"));
-     System.out.println(getRSSFeed());
-    }
-    public static String readRSS(String urlAddress) {
-        try {
-            URL rssUrl = new URL(urlAddress);
-            BufferedReader in = new BufferedReader(new InputStreamReader(rssUrl.openStream()));
-            String sourceCode = "";
-            String line;
-            while ((line = in.readLine()) != null) {
-                sourceCode += line + "\n";
-            }
-            in.close();
-            return sourceCode;
-
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(RSSReader.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(RSSReader.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-
-    public static String getRSSFeed() {
-        logger.info("rssFeed");
-        HttpClient httpClient;
-        HttpResponse response = null;
-        String sourceCode = "";
-        try {
-
-            httpClient = HttpClientBuilder.create().build();
-            HttpGet getRequest = new HttpGet("http://www.scm-manager.com/feed/");
-            getRequest.addHeader("accept", "application/xml");
-
-            response = httpClient.execute(getRequest);
-            if (response.getStatusLine().getStatusCode() != 200) {
-                throw new RuntimeException("Failed : http error code : " + response.getStatusLine().getStatusCode());
-
-            }
-
-            BufferedReader br = new BufferedReader(new InputStreamReader((response.getEntity().getContent())));
-
-            String output;
-
-            while ((output = br.readLine()) != null) {
-                sourceCode += output + "\n";
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(RSSResource.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
-        RSS xmlToPojo = null;
-        String pojoToJson = null;
-        try {
-            xmlToPojo = FormConverter.xmlToPojo(sourceCode);
-            pojoToJson = FormConverter.pojoToJson(xmlToPojo);
-        
-        } catch (JAXBException ex) {
-            Logger.getLogger(RSSReader.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JsonMappingException ex) {
-            Logger.getLogger(RSSReader.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(RSSReader.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return pojoToJson;
-    }
-    
+public interface RSSReader {
+ 
+    public String readRSS(String urlAddress);
+  
+    public String getRSSFeed();
 }

@@ -26,6 +26,7 @@
  */
 package de.triology.universeadm.dashboard;
 
+import com.google.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -39,13 +40,18 @@ import org.slf4j.LoggerFactory;
 @Path("rss")
 public class RSSResource {
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(RSSResource.class.getName());
+    private final RSSReader rSSReader;
+
+    @Inject
+    public RSSResource(RSSReader rSSReader) {
+        this.rSSReader = rSSReader;
+    }
     
-        
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getSCMMFeed() {
-        logger.info("GET method !");
-        return RSSReader.getRSSFeed();
+        logger.info("GET method from RSSResource !");
+        return rSSReader.getRSSFeed();
     }  
     
    

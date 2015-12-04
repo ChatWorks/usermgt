@@ -24,18 +24,50 @@
  * 
  * http://www.scm-manager.com
  */
-
-angular.module('universeadm.dashboard.controllers', ['universeadm.dashboard.services', 'adf', 'LocalStorageModule', 'adf.structures.base',
-  'adf.widget.clock', 'adf.widget.linklist', 'adf.widget.github', 'adf.widget.markdown', 'adf.widget.news', 'adf.widget.randommsg', 'adf.widget.version',
-  'adf.widget.weather','adf.widget.update', 'adf.rssfeed.widget'])
-        .controller('dashboardController', function ($scope, $log, dashboardService, config) {
-          $scope.model = config
-
-          $scope.$on('adfDashboardChanged', function (event, name, model) {
-            dashboardService.set(model).then(function () {
-            }, function () {
-              $log.error("Cant set dashboard data.");
-            })
-          });
-          
+var myRss = angular.module('adf.rssfeed.widget', ['adf.provider','ngResource']);
+  
+myRss.config(rSSFeedWidget);
+       
+    function rSSFeedWidget(dashboardProvider){
+    dashboardProvider
+      .widget('rss.widget', {
+        title: 'RSS Feeds',
+        description: 'Display a RSS feed',
+        controller: 'rssWidgetCtrl',
+        templateUrl: '{widgetsPath}/scripts/widget/view.html',
+        edit: {
+          templateUrl: '{widgetsPath}/scripts/widget/edit.html'
+        }
+      });
+    };
+    myRss.factory('rssWidgetService',rssFeedFactory); 
+    
+    function rssFeedFactory($resource){
+        return {
+            get: function () {
+              return $resource('http://localhost:8084/universeadm/api/rss',{}).get();
+            }
+        };
+    };
+    
+        
+    myRss.controller('rssWidgetCtrl',['$scope','rssWidgetService',rssFeedController]);
+      
+    function rssFeedController($scope, rssWidgetService){
+        rssWidgetService.get().$promise.then(function (data, status, headers, config){
+         // var arr = [];
+          //angular.forEach()
+            $scope.items = data;
         });
+        
+        $scope.showSize = 3;
+          // function yyy($rootScope) {
+          //var erg ;
+           // console.log("ich warte auf ergebnis hier " + $rootScope.size);
+           //return $rootScope.size;
+           
+      //};
+    };
+    
+    
+    

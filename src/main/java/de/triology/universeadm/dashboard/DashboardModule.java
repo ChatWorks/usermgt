@@ -40,6 +40,7 @@ public class DashboardModule extends AbstractModule {
   @Override
   protected void configure() {
     bind(DashboardResource.class);
-      bind(RSSResource.class);
+    bind(RSSReader.class).to(RSSReaderImpl.class);
+    bind(RSSResource.class);
   }
 }
