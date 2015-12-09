@@ -26,19 +26,28 @@
  */
 package de.triology.universeadm.dashboard;
 
+import com.sun.syndication.feed.synd.SyndEntry;
+import com.sun.syndication.feed.synd.SyndFeed;
+import com.sun.syndication.io.FeedException;
+import com.sun.syndication.io.SyndFeedInput;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.codehaus.jackson.map.JsonMappingException;
+import org.json.simple.JSONObject;
+import org.opensaml.XML;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -50,69 +59,24 @@ public class RSSReaderImpl implements RSSReader{
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(RSSReaderImpl.class.getName());
     
     @Override
-    public String readRSS(String urlAddress) {
-        try {
-            URL rssUrl = new URL(urlAddress);
-            BufferedReader in = new BufferedReader(new InputStreamReader(rssUrl.openStream()));
-            String sourceCode = "";
-            String line;
-            while ((line = in.readLine()) != null) {
-                sourceCode += line + "\n";
-            }
-            in.close();
-            return sourceCode;
-
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(RSSReaderImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(RSSReaderImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-
-    @Override
-    public String getRSSFeed() {
+    public String getRSSFeed(String url) {
         HttpClient httpClient;
         HttpResponse response = null;
-        String sourceCode = "";
+        String parseRSSFeeds = "";
         try {
-
             httpClient = HttpClientBuilder.create().build();
-            HttpGet getRequest = new HttpGet("http://www.scm-manager.com/feed/");
+            HttpGet getRequest = new HttpGet(url);
             getRequest.addHeader("accept", "application/xml");
-
             response = httpClient.execute(getRequest);
             if (response.getStatusLine().getStatusCode() != 200) {
                 throw new RuntimeException("Failed : http error code : " + response.getStatusLine().getStatusCode());
-
             }
-
-            BufferedReader br = new BufferedReader(new InputStreamReader((response.getEntity().getContent())));
-
-            String output;
-
-            while ((output = br.readLine()) != null) {
-                sourceCode += output + "\n";
-            }
+            parseRSSFeeds = FormConverter.parseRSSFeeds(response);
         } catch (IOException ex) {
             Logger.getLogger(RSSResource.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
-        RSS xmlToPojo = null;
-        String pojoToJson = null;
-        try {
-            xmlToPojo = FormConverter.xmlToPojo(sourceCode);
-            pojoToJson = FormConverter.pojoToJson(xmlToPojo);
-        
-        } catch (JAXBException ex) {
+        } catch (IllegalArgumentException ex) {
             Logger.getLogger(RSSReaderImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JsonMappingException ex) {
-            Logger.getLogger(RSSReaderImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(RSSReaderImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return pojoToJson;
+        } 
+    return parseRSSFeeds;
     }
-    
 }

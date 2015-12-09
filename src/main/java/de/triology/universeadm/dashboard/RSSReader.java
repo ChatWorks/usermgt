@@ -32,7 +32,5 @@ package de.triology.universeadm.dashboard;
  */
 public interface RSSReader {
  
-    public String readRSS(String urlAddress);
-  
-    public String getRSSFeed();
+    public String getRSSFeed(String url);
 }

@@ -24,7 +24,7 @@
  * 
  * http://www.scm-manager.com
  */
-var myRss = angular.module('adf.rssfeed.widget', ['adf.provider','ngResource']);
+var myRss = angular.module('adf.rssfeed.widget', ['adf.provider','restangular']);
   
 myRss.config(rSSFeedWidget);
        
@@ -42,10 +42,10 @@ myRss.config(rSSFeedWidget);
     };
     myRss.factory('rssWidgetService',rssFeedFactory); 
     
-    function rssFeedFactory($resource){
+    function rssFeedFactory(Restangular){
         return {
-            get: function () {
-              return $resource('http://localhost:8084/universeadm/api/rss',{}).get();
+            get: function (etwas) {
+                return Restangular.one('rss').get({'url': etwas});
             }
         };
     };
@@ -54,20 +54,41 @@ myRss.config(rSSFeedWidget);
     myRss.controller('rssWidgetCtrl',['$scope','rssWidgetService',rssFeedController]);
       
     function rssFeedController($scope, rssWidgetService){
-        rssWidgetService.get().$promise.then(function (data, status, headers, config){
-         // var arr = [];
-          //angular.forEach()
-            $scope.items = data;
-        });
+       var input = $scope.config.inputURL;
         
-        $scope.showSize = 3;
-          // function yyy($rootScope) {
-          //var erg ;
-           // console.log("ich warte auf ergebnis hier " + $rootScope.size);
-           //return $rootScope.size;
-           
-      //};
+        if(input !== undefined) {
+           rssWidgetService.get(input).then(function (response){
+           $scope.items = response;
+           });
+       }  
+        if($scope.config.size === undefined) {
+            $scope.config.size = 3;
+        }
+        $scope.showSize = $scope.config.size;
     };
+   
+    var INTEGER_REGEXP = /^\-?\d+$/;
+    myRss.directive('validateInteger',checkValueOfNgModel); 
     
-    
+    function checkValueOfNgModel() {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: function(scope, elm, attrs, rssWidgetCtrl) {
+//            var regex = /^\d$/;
+        var validat = function (modelValue) {
+            console.info("DIRECTIVE ");
+          // it is valid
+          rssWidgetCtrl.$setValidity('validateInteger', INTEGER_REGEXP.test(modelValue));
+
+        // it is invalid
+        return modelValue;
+      };
+      ctrl.$parsers.unshift(validat);
+      ctrl.$formatters.unshift(validat);
+    }
+  };
+};
+
+
     

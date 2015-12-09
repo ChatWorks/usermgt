@@ -34,7 +34,7 @@ http://www.scm-manager.com
     <body>
        <div ng-controller="rssWidgetCtrl">
            <ul>
-               <li data-ng-repeat="entry in items.channel.item" ng-show="$index < showSize">
+               <li data-ng-repeat="entry in items" ng-show="$index < showSize">
                <a ng-href="{{entry.link}}" target="_blank"> {{entry.title}}</a>
            </li>
            </ul>

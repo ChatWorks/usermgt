@@ -32,9 +32,19 @@ http://www.scm-manager.com
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
+            
         <div ng-controller="rssWidgetCtrl">
+            <form name="formvalid" novalidate>
+            <label>Enter your URL of RSS feeds</label> <br/>
+            <input class="form-control input-sm" ng-model="config.inputURL" placeholder="Enter URL"/> <br/>
+            
             <label>Quantity RSS feed (integer 0-10)</label> <br/>
-            <input ng-model="size" min="0" max="10" type="number" ng-init="size=3">
+            <input ng-model="config.size" min="1" max="10" type="number" ng-init="config.size=3"
+                   ng-pattern="/^(\d)+$/" required><br/>
+            <span class="alert" ng-show="formvalid.config.size.$valid.pattern">Doesn't look like an integer</span>
+                <span ng-show="formvalid.config.size.$error.required">Doenn´t look like empty</span>
+            
+            </form>
         </div>
     </body>
 </html>

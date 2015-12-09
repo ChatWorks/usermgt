@@ -26,12 +26,23 @@
  */
 package de.triology.universeadm.dashboard;
 
+import com.sun.syndication.feed.synd.SyndEntry;
+import com.sun.syndication.feed.synd.SyndFeed;
+import com.sun.syndication.io.FeedException;
+import com.sun.syndication.io.SyndFeedInput;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import org.apache.http.HttpResponse;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.AnnotationIntrospector;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -46,36 +57,41 @@ public class FormConverter {
 
     private static final Logger LOG = Logger.getLogger(FormConverter.class.getName());
     
-    public static  RSS xmlToPojo(String xmlData) throws JAXBException
- {
-  JAXBContext context = JAXBContext.newInstance(RSS.class);
-  Unmarshaller unmarshaller = context.createUnmarshaller();
-  StringReader reader = new StringReader(xmlData);
-  RSS rssObj = (RSS) unmarshaller.unmarshal(reader);
-  return rssObj;
- }
-    
-    
-    public static String pojoToJson(RSS obj) throws JAXBException,
- JsonParseException, JsonMappingException, IOException
- {
-  ObjectMapper mapper = new ObjectMapper();
-  AnnotationIntrospector introspector = new JaxbAnnotationIntrospector();
-  mapper.getSerializationConfig().setAnnotationIntrospector(introspector);
-  String jsonData = mapper.writeValueAsString(obj);
-  return jsonData;
- }
-    
-    
-    private RSS jsonToPojo(String jsonData) throws JAXBException,
- JsonParseException, JsonMappingException, IOException
- {
-  ObjectMapper mapper = new ObjectMapper();
-  AnnotationIntrospector introspector = new JaxbAnnotationIntrospector();
-  mapper.getDeserializationConfig().setAnnotationIntrospector(
-   introspector);
-  RSS rssObj = mapper.readValue(jsonData, RSS.class);
-  return rssObj;
- }
+    public static String parseRSSFeeds(HttpResponse response) {
+        List<RSSFeeds> list = new ArrayList<RSSFeeds>();
+		// Reading the feed
+		SyndFeedInput input = new SyndFeedInput();
+                StringBuilder sb = new StringBuilder();
+                try {
+                SyndFeed feed = input.build(new InputStreamReader(response.getEntity().getContent()));
+		List entries = feed.getEntries();
+		Iterator itEntries = entries.iterator();
  
+		while (itEntries.hasNext()) {
+                    SyndEntry entry = (SyndEntry) itEntries.next();
+                    list.add(new RSSFeeds(entry.getTitle(), entry.getLink()));
+		}
+        } catch (IOException e) {
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(FormConverter.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FeedException ex) {
+            Logger.getLogger(FormConverter.class.getName()).log(Level.SEVERE, null, ex);
+        }
+             return JSONObjWithRSSFeeds(list);
+    }
+    
+    private  static String JSONObjWithRSSFeeds( List<RSSFeeds>  pListOfRSSFeeds) {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final ObjectMapper objectMapper = new ObjectMapper();
+        
+        try {
+            objectMapper.writeValue(out, pListOfRSSFeeds);
+        } catch (IOException ex) {
+            Logger.getLogger(FormConverter.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        final byte[] data = out.toByteArray();
+        
+        return new String(data);
+    }
+    
 }
