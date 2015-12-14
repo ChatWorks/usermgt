@@ -33,21 +33,16 @@ import com.sun.syndication.io.SyndFeedInput;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.apache.http.HttpResponse;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.AnnotationIntrospector;
-import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.xc.JaxbAnnotationIntrospector;
 
 /**
  *
@@ -90,8 +85,15 @@ public class FormConverter {
             Logger.getLogger(FormConverter.class.getName()).log(Level.SEVERE, null, ex);
         }
         final byte[] data = out.toByteArray();
-        
         return new String(data);
     }
+    
+    public static boolean checkURL(String pURL) {
+        Pattern p = Pattern.compile("(@)?(href=')?(HREF=')?(HREF=\")?(href=\")?(http://)?[a-zA-Z_0-9\\-]+(\\.\\w[a-zA-Z_0-9\\-]+)+(/[#&\\n\\-=?\\+\\%/\\.\\w]+)?");  
+
+        Matcher m = p.matcher(pURL);
+        return m.matches();
+    }
+    
     
 }

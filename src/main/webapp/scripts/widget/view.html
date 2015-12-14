@@ -32,12 +32,31 @@ http://www.scm-manager.com
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-       <div ng-controller="rssWidgetCtrl">
-           <ul>
-               <li data-ng-repeat="entry in items" ng-show="$index < showSize">
-               <a ng-href="{{entry.link}}" target="_blank"> {{entry.title}}</a>
-           </li>
+        <div ng-form="rssWidgetForm" ng-controller="rssWidgetCtrl">
+            
+            <div class="form-inline">
+                <div class="form-group">
+                    <button type="button" class="btn-toolbar" ng-click="showDetails = ! showDetails" > 
+                    <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                    
+                    <input   placeholder="Enter title" class="input-sm form-control fa fa-times-circle" ng-class="{ 'hidden': ! showDetails }"
+                            type="text" ng-pattern="/^[a-zA-Z_-]*$/" name="searchTitle" ng-model="searchText">
+                    <span class="glyphicon glyphicon-remove-sign" ng-click="searchText=''"></span>
+                    
+                    
+                    <span  class="text-danger" ng-show="rssWidgetForm.searchTitle.$error.pattern">Field must not be content character </span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <br/>
+            <ul>
+               <li data-ng-repeat="entry in items | filter:searchText" ng-show="$index < showSize">
+                   <a ng-href="{{entry.link}}" target="_blank" onclick="showDetails = ! showDetails"> {{entry.title}}</a>
+                </li>
            </ul>
+            </div>    
        </div>
 
     </body>

@@ -26,28 +26,16 @@
  */
 package de.triology.universeadm.dashboard;
 
-import com.sun.syndication.feed.synd.SyndEntry;
-import com.sun.syndication.feed.synd.SyndFeed;
-import com.sun.syndication.io.FeedException;
-import com.sun.syndication.io.SyndFeedInput;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Iterator;
-import java.util.List;
+import java.nio.charset.Charset;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.bind.JAXBException;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.json.simple.JSONObject;
-import org.opensaml.XML;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -60,14 +48,20 @@ public class RSSReaderImpl implements RSSReader{
     
     @Override
     public String getRSSFeed(String url) {
+        if (FormConverter.checkURL(url)) {
+            
         HttpClient httpClient;
         HttpResponse response = null;
+        
         String parseRSSFeeds = "";
         try {
             httpClient = HttpClientBuilder.create().build();
             HttpGet getRequest = new HttpGet(url);
             getRequest.addHeader("accept", "application/xml");
+            
             response = httpClient.execute(getRequest);
+//            HttpEntity entity = response.getEntity();
+//            showContentType(entity);
             if (response.getStatusLine().getStatusCode() != 200) {
                 throw new RuntimeException("Failed : http error code : " + response.getStatusLine().getStatusCode());
             }
@@ -76,7 +70,18 @@ public class RSSReaderImpl implements RSSReader{
             Logger.getLogger(RSSResource.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalArgumentException ex) {
             Logger.getLogger(RSSReaderImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }   
+            return parseRSSFeeds;
         } 
-    return parseRSSFeeds;
+        return  null;
     }
+    
+    private void showContentType(HttpEntity entity) {
+        ContentType contentType = ContentType.getOrDefault(entity);
+        String mimeType = contentType.getMimeType();
+        Charset charset = contentType.getCharset();
+        logger.info("\nMimeType = " + mimeType);
+        logger.info("Charset  = " + charset);
+    }
+    
 }

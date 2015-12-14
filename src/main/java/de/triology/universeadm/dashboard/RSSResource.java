@@ -52,7 +52,8 @@ public class RSSResource {
     }
     
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+//    @Produces(MediaType.APPLICATION_JSON)
+    @Produces("text/json; charset=UTF-8")
     public String getSCMMFeed(@QueryParam("url")String url) {
         logger.info("GET method from RSSResource !" + url);
         return rSSReader.getRSSFeed(url);

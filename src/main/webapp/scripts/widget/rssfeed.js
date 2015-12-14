@@ -49,46 +49,26 @@ myRss.config(rSSFeedWidget);
             }
         };
     };
-    
         
     myRss.controller('rssWidgetCtrl',['$scope','rssWidgetService',rssFeedController]);
       
-    function rssFeedController($scope, rssWidgetService){
-       var input = $scope.config.inputURL;
+    function rssFeedController($scope, rssWidgetService) {
+        
+        var input = $scope.config.inputURL;
         
         if(input !== undefined) {
            rssWidgetService.get(input).then(function (response){
            $scope.items = response;
            });
-       }  
+        }
+       
         if($scope.config.size === undefined) {
             $scope.config.size = 3;
         }
+        
+        if ($scope.config.inputURL === undefined) { 
+              $scope.config.inputURL = "http://www.scm-manager.com/feed/";
+        }
         $scope.showSize = $scope.config.size;
     };
-   
-    var INTEGER_REGEXP = /^\-?\d+$/;
-    myRss.directive('validateInteger',checkValueOfNgModel); 
-    
-    function checkValueOfNgModel() {
-    return {
-        restrict: 'A',
-        require: 'ngModel',
-        link: function(scope, elm, attrs, rssWidgetCtrl) {
-//            var regex = /^\d$/;
-        var validat = function (modelValue) {
-            console.info("DIRECTIVE ");
-          // it is valid
-          rssWidgetCtrl.$setValidity('validateInteger', INTEGER_REGEXP.test(modelValue));
-
-        // it is invalid
-        return modelValue;
-      };
-      ctrl.$parsers.unshift(validat);
-      ctrl.$formatters.unshift(validat);
-    }
-  };
-};
-
-
     

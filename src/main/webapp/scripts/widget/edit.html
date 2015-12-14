@@ -32,18 +32,27 @@ http://www.scm-manager.com
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-            
         <div ng-controller="rssWidgetCtrl">
-            <form name="formvalid" novalidate>
+            <form name="editForm">
+            
+            <div>
             <label>Enter your URL of RSS feeds</label> <br/>
-            <input class="form-control input-sm" ng-model="config.inputURL" placeholder="Enter URL"/> <br/>
+            <input class="form-control input-sm" ng-model="config.inputURL" name="url" type="url"  
+                   placeholder="Enter URL"/> <br/>
             
-            <label>Quantity RSS feed (integer 0-10)</label> <br/>
-            <input ng-model="config.size" min="1" max="10" type="number" ng-init="config.size=3"
-                   ng-pattern="/^(\d)+$/" required><br/>
-            <span class="alert" ng-show="formvalid.config.size.$valid.pattern">Doesn't look like an integer</span>
-                <span ng-show="formvalid.config.size.$error.required">Doenn´t look like empty</span>
+            <span class="text-danger" ng-show="editForm.url.$error.url">The value is not a valid URL </span>
+            </div>
+
+            <div>
+            <label>Quantity RSS feed (integer 1-10)</label> <br/>
+            <input ng-model="config.size" min="1" max="10" name="inputNr" type="number" ng-init="config.size=3"
+                    ng-pattern="/^(\d)+$/" required  validate-integer/><br/>
             
+            <span class="text-danger" ng-show="editForm.inputNr.$error.required">Field must not be empty or content character</span>
+            <span class="text-danger" ng-show="editForm.inputNr.$error.pattern">The value is not a valid integer!</span>
+            <span class="text-danger" ng-show="editForm.inputNr.$error.min || editForm.inputNr.$error.max">
+                    The value must be in range 1 to 10!</span>
+                </div>
             </form>
         </div>
     </body>
