@@ -66,7 +66,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 public class UserResourceTest
 {

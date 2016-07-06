@@ -52,7 +52,7 @@ import javax.xml.bind.JAXB;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 public class DefaultMapperFactoryTest
 {

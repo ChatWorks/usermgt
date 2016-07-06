@@ -52,7 +52,7 @@ import java.util.concurrent.ExecutionException;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 @Singleton
 public class DefaultMapperFactory implements MapperFactory

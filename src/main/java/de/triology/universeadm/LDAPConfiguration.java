@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 @XmlRootElement(name = "ldap")
 @XmlAccessorType(XmlAccessType.FIELD)

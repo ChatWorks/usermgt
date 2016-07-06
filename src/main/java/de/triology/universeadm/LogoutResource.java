@@ -47,7 +47,7 @@ import javax.ws.rs.core.Response;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 @Path("logout")
 public class LogoutResource

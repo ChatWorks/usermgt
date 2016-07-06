@@ -43,7 +43,7 @@ import javax.validation.ValidatorFactory;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 @MetaInfServices(Module.class)
 public class ValidationModule extends AbstractModule

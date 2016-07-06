@@ -41,7 +41,7 @@ import org.jboss.resteasy.mock.MockHttpResponse;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 public final class Resources
 {

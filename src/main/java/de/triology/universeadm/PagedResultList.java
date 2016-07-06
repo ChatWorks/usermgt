@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  * @param <T>
  */
 @XmlRootElement(name = "paged-result")

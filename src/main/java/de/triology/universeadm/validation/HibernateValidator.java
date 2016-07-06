@@ -36,7 +36,7 @@ import javax.validation.ValidatorFactory;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 public class HibernateValidator implements Validator
 {

@@ -37,7 +37,7 @@ import java.util.Map;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 public class LDAPDisabledModule extends ServletModule
 {

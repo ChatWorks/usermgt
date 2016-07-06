@@ -36,7 +36,7 @@ import com.unboundid.ldap.sdk.LDAPInterface;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 @Singleton
 public class DefaultLDAPConnectionStrategy implements LDAPConnectionStrategy

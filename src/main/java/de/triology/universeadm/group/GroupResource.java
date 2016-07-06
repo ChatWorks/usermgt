@@ -39,7 +39,7 @@ import javax.ws.rs.core.Response;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 @Path("groups")
 public class GroupResource extends AbstractManagerResource<Group>

@@ -31,7 +31,7 @@ import de.triology.universeadm.Unsupported;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 public abstract class AbstractMappingDecoder implements MappingDecoder
 {

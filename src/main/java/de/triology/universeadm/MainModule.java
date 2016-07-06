@@ -46,7 +46,7 @@ import java.util.ServiceLoader;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 public class MainModule extends ServletModule
 {

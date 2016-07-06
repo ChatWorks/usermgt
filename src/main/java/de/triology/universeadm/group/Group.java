@@ -44,7 +44,7 @@ import java.util.List;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 public class Group implements Comparable<Group>
 {

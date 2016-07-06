@@ -42,7 +42,7 @@ import javax.ws.rs.ext.Provider;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 @Provider
 public class IllegalQueryExceptionMapper

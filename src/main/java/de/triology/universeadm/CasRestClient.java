@@ -60,7 +60,7 @@ import javax.servlet.http.HttpServletResponse;
  * Client for the cas rest api.
  * 
  * @see <a href="https://wiki.jasig.org/display/casum/restful+api">CAS RESTful API</a>
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 public class CasRestClient
 {

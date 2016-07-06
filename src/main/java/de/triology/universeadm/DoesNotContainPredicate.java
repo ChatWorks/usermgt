@@ -32,7 +32,7 @@ import java.util.Collection;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  * @param <T>
  */
 public class DoesNotContainPredicate<T> implements Predicate<T>

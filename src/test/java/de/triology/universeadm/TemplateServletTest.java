@@ -45,7 +45,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 @RunWith(MockitoJUnitRunner.class)
 public class TemplateServletTest

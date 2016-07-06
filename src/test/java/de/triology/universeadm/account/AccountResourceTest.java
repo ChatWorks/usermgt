@@ -40,7 +40,7 @@ import static org.mockito.Mockito.*;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 public class AccountResourceTest
 {

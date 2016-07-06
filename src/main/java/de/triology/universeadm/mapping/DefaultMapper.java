@@ -47,7 +47,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  * @param <T>
  */
 public class DefaultMapper<T> implements Mapper<T>

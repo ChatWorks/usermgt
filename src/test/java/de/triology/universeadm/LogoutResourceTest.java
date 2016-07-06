@@ -59,7 +59,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 @SubjectAware(
   configuration = "classpath:de/triology/universeadm/shiro.001.ini",

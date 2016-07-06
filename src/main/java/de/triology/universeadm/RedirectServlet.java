@@ -45,7 +45,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 @Singleton
 public class RedirectServlet extends HttpServlet

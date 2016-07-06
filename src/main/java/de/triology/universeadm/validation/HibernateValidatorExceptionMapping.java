@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 @Provider
 public class HibernateValidatorExceptionMapping implements ExceptionMapper<ConstraintViolationException>

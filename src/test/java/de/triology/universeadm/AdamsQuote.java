@@ -31,7 +31,7 @@ package de.triology.universeadm;
  * Quotes of Douglas Adams. This class contains random quotes of Douglas Adams. 
  * The quotes are for string comparison in unit tests.
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 public final class AdamsQuote
 {

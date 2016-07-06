@@ -36,7 +36,7 @@ import com.google.common.base.Objects;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  * @param <T>
  */
 public class AbstractEntityEvent<T> implements EntityEvent<T>

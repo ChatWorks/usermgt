@@ -37,7 +37,7 @@ import java.util.concurrent.ExecutionException;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 @Singleton
 public class InjectorMappingConverterFactory implements MappingConverterFactory

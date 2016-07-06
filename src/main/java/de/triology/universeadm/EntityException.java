@@ -29,7 +29,7 @@ package de.triology.universeadm;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 public class EntityException extends RuntimeException
 {

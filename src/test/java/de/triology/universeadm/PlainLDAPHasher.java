@@ -31,7 +31,7 @@ import com.google.common.base.Charsets;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 public class PlainLDAPHasher extends LDAPHasher
 {

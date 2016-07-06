@@ -48,7 +48,7 @@ import javax.ws.rs.core.Response;
 /**
  * TODO remove package cycle with group.
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 @Path("users")
 public class UserResource extends AbstractManagerResource<User>

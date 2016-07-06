@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 @Singleton
 public class TemplateServlet extends HttpServlet

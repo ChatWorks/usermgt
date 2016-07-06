@@ -60,7 +60,7 @@ import de.triology.universeadm.mapping.IllegalQueryException;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 @SubjectAware(
   configuration = "classpath:de/triology/universeadm/shiro.001.ini", 

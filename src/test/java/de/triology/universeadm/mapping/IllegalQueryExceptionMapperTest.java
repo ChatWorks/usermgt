@@ -54,7 +54,7 @@ import javax.ws.rs.Path;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 public class IllegalQueryExceptionMapperTest
 {

@@ -7,7 +7,7 @@
 FROM debian:wheezy
 
 ## Get some karma ##
-MAINTAINER Sebastian Sdorra <sebastian.sdorra@triology.de>
+MAINTAINER Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
 
 # install wget, java, tomcat, supervisor
 RUN echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu precise main"\

@@ -37,7 +37,7 @@ import org.apache.shiro.crypto.AesCipherService;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 public final class Cipher
 {

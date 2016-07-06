@@ -67,7 +67,7 @@ import javax.servlet.http.HttpServletResponse;
  * This servlet can also be used for text files, GZIP would decrease network bandwidth.
  *
  * @author BalusC
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  *
  * @link http://balusc.blogspot.com/2009/02/fileservlet-supporting-resume-and.html
  */

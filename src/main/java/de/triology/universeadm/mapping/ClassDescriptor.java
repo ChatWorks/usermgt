@@ -33,7 +33,7 @@ import java.util.Map;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 final class ClassDescriptor<T>
 {

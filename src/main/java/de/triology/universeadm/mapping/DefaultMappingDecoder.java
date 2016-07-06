@@ -42,7 +42,7 @@ import java.util.Collection;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 public class DefaultMappingDecoder extends AbstractMappingDecoder
 {

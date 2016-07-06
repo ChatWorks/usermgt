@@ -62,7 +62,7 @@ import org.apache.shiro.authc.credential.AllowAllCredentialsMatcher;
  * Cas realm which uses the rest api of cas. This realm is required for the 
  * basic authentication against the api.
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 @Singleton
 public class CasRestAuthenticationRealm extends AuthenticatingRealm

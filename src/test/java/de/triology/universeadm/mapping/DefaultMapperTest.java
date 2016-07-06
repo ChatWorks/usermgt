@@ -45,7 +45,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 public class DefaultMapperTest
 {

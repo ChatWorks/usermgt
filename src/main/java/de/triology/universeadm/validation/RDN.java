@@ -37,7 +37,7 @@ import javax.validation.Payload;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 @Retention(RUNTIME)
 @Target({METHOD, FIELD, ANNOTATION_TYPE})

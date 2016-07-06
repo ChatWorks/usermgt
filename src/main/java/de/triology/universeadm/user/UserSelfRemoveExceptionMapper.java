@@ -46,7 +46,7 @@ import javax.ws.rs.ext.Provider;
 /**
  * Map {@link UserSelfRemoveException} to http status code 409 (Conflict).
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  * @since 1.1.0
  */
 @Provider

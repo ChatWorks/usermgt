@@ -49,7 +49,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 public class User implements Comparable<User>
 {

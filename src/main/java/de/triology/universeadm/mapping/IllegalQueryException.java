@@ -31,7 +31,7 @@ package de.triology.universeadm.mapping;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 public class IllegalQueryException extends RuntimeException
 {

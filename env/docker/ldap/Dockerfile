@@ -8,7 +8,7 @@
 FROM debian:wheezy
 
 ## Get some karma ##
-MAINTAINER Sebastian Sdorra <sebastian.sdorra@triology.de>
+MAINTAINER Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
 
 # install slapd
 RUN apt-get update -qq && apt-get install -y supervisor slapd ldap-utils -qq && apt-get clean

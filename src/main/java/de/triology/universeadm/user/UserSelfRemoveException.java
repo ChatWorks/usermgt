@@ -32,7 +32,7 @@ package de.triology.universeadm.user;
 /**
  * Exception is fired if a user tries to remove himself.
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  * @since 1.1.0
  */
 public class UserSelfRemoveException extends RuntimeException

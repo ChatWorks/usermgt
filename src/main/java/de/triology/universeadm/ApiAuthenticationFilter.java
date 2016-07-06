@@ -54,7 +54,7 @@ import javax.servlet.http.HttpServletRequest;
  * authentication challenge if the client is not a browser. In case of a browser
  * the filter will issue a redirect to the login page.
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  * @since 1.2.0
  */
 public final class ApiAuthenticationFilter extends BasicHttpAuthenticationFilter

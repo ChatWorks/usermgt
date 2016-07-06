@@ -39,7 +39,7 @@ import com.github.sdorra.shiro.SubjectAware;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 @SubjectAware(configuration = "classpath:de/triology/universeadm/shiro.001.ini", username = "dent", password = "secret")
 public class DefaultAccountManagerTest

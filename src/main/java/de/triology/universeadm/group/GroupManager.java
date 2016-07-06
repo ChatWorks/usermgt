@@ -31,7 +31,7 @@ import de.triology.universeadm.Manager;
 
 /**
  *
- * @author Sebastian Sdorra <sebastian.sdorra@triology.de>
+ * @author Sebastian Sdorra <sebastian.sdorra@cloudogu.com>
  */
 public interface GroupManager extends Manager<Group>
 {
